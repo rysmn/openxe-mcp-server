@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { zodToJsonSchema } from "zod-to-json-schema";
 import { OpenXEClient } from "../client/openxe-client.js";
 import { fetchFilteredList, FETCH_ALL_SAFETY_CAP } from "../utils/field-filter.js";
 import { fetchPurchaseOrdersWithMeta, PURCHASE_ORDER_SCAN_CAP } from "../utils/purchase-order-fetch.js";
@@ -85,7 +84,7 @@ export const DASHBOARD_TOOL_DEFINITIONS: ToolDefinition[] = [
       "Verfuegbare KPIs: umsatz-monat, umsatz-jahr, offene-auftraege, offene-rechnungen, " +
       "ueberfaellige-rechnungen, top-kunde, auftragseingang-woche, artikel-anzahl, kunden-anzahl, " +
       "offene-bestellungen, bestellvolumen-monat.",
-    inputSchema: zodToJsonSchema(DashboardInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(DashboardInput) as Record<string, unknown>,
     annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   },
 ];

@@ -327,7 +327,7 @@ export const ReleasePurchaseOrderInput = z.object({
 });
 
 /** Where-clause for filtering documents (passed as query params to REST v1). */
-const WhereClause = z.record(z.string()).describe(
+const WhereClause = z.record(z.string(), z.string()).describe(
   "Key-value filter (z.B. {status: 'freigegeben', kundennummer: '10001'})"
 );
 

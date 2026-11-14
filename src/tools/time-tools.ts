@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { zodToJsonSchema } from "zod-to-json-schema";
 import { OpenXEClient } from "../client/openxe-client.js";
 import { DateString } from "../schemas/common.js";
 
@@ -133,49 +132,49 @@ export const TIME_TOOL_DEFINITIONS: ToolDefinition[] = [
     name: "openxe-clock-status",
     description:
       "Stechuhr-Status eines Mitarbeiters abfragen (eingestempelt/ausgestempelt, aktuelle Pause). Pflichtfeld: adresse (Mitarbeiter-Adress-ID).",
-    inputSchema: zodToJsonSchema(ClockStatusInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(ClockStatusInput) as Record<string, unknown>,
     annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   },
   {
     name: "openxe-clock-action",
     description:
       "Ein-/Ausstempeln oder Pause starten/stoppen. Pflichtfeld: cmd (kommen/gehen/pausestart/pausestop). Optional: user (Benutzer-ID), adresse (Mitarbeiter-Adress-ID als Fallback).",
-    inputSchema: zodToJsonSchema(ClockActionInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(ClockActionInput) as Record<string, unknown>,
     annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: false },
   },
   {
     name: "openxe-clock-summary",
     description:
       "Wochen-Zeituebersicht: Soll-/Ist-Stunden, Ueberstunden, Urlaubstage. Pflichtfeld: adresse (Mitarbeiter-Adress-ID).",
-    inputSchema: zodToJsonSchema(ClockSummaryInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(ClockSummaryInput) as Record<string, unknown>,
     annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   },
   {
     name: "openxe-list-time-entries",
     description:
       "Zeiterfassungs-Eintraege auflisten mit optionalen Filtern (adresse, kundennummer, projekt, von, bis, offset, limit).",
-    inputSchema: zodToJsonSchema(TimeEntryListInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(TimeEntryListInput) as Record<string, unknown>,
     annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   },
   {
     name: "openxe-create-time-entry",
     description:
       "Neuen Zeiterfassungs-Eintrag erstellen. Pflichtfelder: aufgabe, von (YYYY-MM-DD HH:mm:ss), bis (YYYY-MM-DD HH:mm:ss). Mitarbeiter via mitarbeiternummer oder adresse.",
-    inputSchema: zodToJsonSchema(TimeEntryCreateInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(TimeEntryCreateInput) as Record<string, unknown>,
     annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
   },
   {
     name: "openxe-edit-time-entry",
     description:
       "Zeiterfassungs-Eintrag bearbeiten. Pflichtfeld: id. Weitere Felder optional (aufgabe, von, bis, etc.).",
-    inputSchema: zodToJsonSchema(TimeEntryEditInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(TimeEntryEditInput) as Record<string, unknown>,
     annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   },
   {
     name: "openxe-delete-time-entry",
     description:
       "Zeiterfassungs-Eintrag loeschen. Pflichtfeld: id.",
-    inputSchema: zodToJsonSchema(TimeEntryDeleteInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(TimeEntryDeleteInput) as Record<string, unknown>,
     annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: false },
   },
 ];

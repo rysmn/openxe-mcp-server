@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { zodToJsonSchema } from "zod-to-json-schema";
 import { OpenXEClient } from "../client/openxe-client.js";
 
 interface ToolDefinition {
@@ -322,7 +321,7 @@ export const ARTICLE_TOOL_DEFINITIONS: ToolDefinition[] = [
       "Required: name_de, nummer, artikelkategorie. Optional: standardlieferant (address ID), hersteller, herstellernummer, ean, zolltarifnummer, herkunftsland, lagerartikel, einkaufspreis. " +
       "Empty optional text fields are skipped. Text must not contain ' \" \\ or control characters (OpenXE does not escape them); rephrase, or use a typographic apostrophe (U+2019), which changes the stored text. " +
       "Without confirm: true the call only returns a dry-run preview and writes nothing.",
-    inputSchema: zodToJsonSchema(
+    inputSchema: z.toJSONSchema(
       ArticleCreateInput.extend({
         confirm: z.boolean().optional().describe("Must be true to create. Without it the call only returns a dry-run preview."),
       })
@@ -340,7 +339,7 @@ export const ARTICLE_TOOL_DEFINITIONS: ToolDefinition[] = [
       "Without confirm: true the call only returns a dry-run preview and writes nothing. " +
       "To set a purchase price use openxe-add-article-purchase-price.",
     inputSchema: {
-      ...(zodToJsonSchema(
+      ...(z.toJSONSchema(
         ArticleUpdateBase.extend({
           confirm: z.boolean().optional().describe("Must be true to change the article. Without it the call only returns a dry-run preview."),
         })
@@ -358,7 +357,7 @@ export const ARTICLE_TOOL_DEFINITIONS: ToolDefinition[] = [
       "Uses the Legacy action ArtikelEdit with geloescht=1. The lookup by nummer does not exclude deleted articles, so deleting an already deleted article is a no-op. " +
       "Side effect: the OpenXE call also expires the sales prices (Verkaufspreise) of the article. Purchase prices (Einkaufspreise) stay, so remove them first with openxe-delete-article-purchase-price if they must not remain. " +
       "Without confirm: true the call only returns a dry-run preview and deletes nothing.",
-    inputSchema: zodToJsonSchema(
+    inputSchema: z.toJSONSchema(
       ArticleDeleteInput.extend({
         confirm: z.boolean().optional().describe("Must be true to delete. Without it the call only returns a dry-run preview."),
       })
@@ -372,7 +371,7 @@ export const ARTICLE_TOOL_DEFINITIONS: ToolDefinition[] = [
       "Rows are marked as deleted (geloescht=1) and expire yesterday, the same as the delete button in the OpenXE UI. Other suppliers are not touched. " +
       "Uses the Legacy action ArtikelEinkaufspreisDelete. That action exists only in the patched api.php of the test OpenXE install; stock OpenXE 1.13 and production do not have it, so the call fails there. " +
       "Without confirm: true the call only returns a dry-run preview and deletes nothing.",
-    inputSchema: zodToJsonSchema(
+    inputSchema: z.toJSONSchema(
       ArticlePurchasePriceDeleteInput.extend({
         confirm: z.boolean().optional().describe("Must be true to delete. Without it the call only returns a dry-run preview."),
       })
@@ -389,7 +388,7 @@ export const ARTICLE_TOOL_DEFINITIONS: ToolDefinition[] = [
       "Other purchase prices (Einkaufspreise) are kept. Sales prices (Verkaufspreise) are read and sent back when verkaufspreise is omitted, as with openxe-update-article. The supplier is looked up by lieferantennummer, then by lieferantname; only if neither matches is a new supplier created. The name lookup does not check the supplier role, so a customer with the same name can match, and an existing match does not get the lieferantennummer. " +
       "Retrying with a different price creates another version each time, so check the current price first (openxe-get-article with includeEinkaufspreise). " +
       "Without confirm: true the call only returns a dry-run preview and writes nothing.",
-    inputSchema: zodToJsonSchema(
+    inputSchema: z.toJSONSchema(
       ArticlePurchasePriceInput.extend({
         confirm: z.boolean().optional().describe("Must be true to write the price. Without it the call only returns a dry-run preview."),
       })

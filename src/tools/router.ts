@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { zodToJsonSchema } from "zod-to-json-schema";
 import { OpenXEClient } from "../client/openxe-client.js";
 import { handleReadTool } from "./read-tools.js";
 import { handleDocumentReadTool } from "./document-read-tools.js";
@@ -216,7 +215,7 @@ export const DISCOVER_TOOL_DEFINITION: ToolDefinition = {
   name: "openxe-discover",
   description:
     "Shows available OpenXE actions. Call ONCE at conversation start, then use 'openxe' tool to execute actions. Do NOT call more than once per conversation. Optional: category filter.",
-  inputSchema: zodToJsonSchema(DiscoverInput) as Record<string, unknown>,
+  inputSchema: z.toJSONSchema(DiscoverInput) as Record<string, unknown>,
   annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
 };
 
@@ -327,7 +326,7 @@ const RouterInput = z.object({
     .string()
     .describe('Aktion (z.B. "list-orders", "get-address", "create-order"). Nutze openxe-discover um verfuegbare Aktionen zu sehen.'),
   params: z
-    .record(z.unknown())
+    .record(z.string(), z.unknown())
     .optional()
     .default({})
     .describe("Aktionsspezifische Parameter (optional)"),
@@ -359,7 +358,7 @@ export const ROUTER_TOOL_DEFINITION: ToolDefinition = {
     "    {action:'list-orders', params:{zeitraum:'dieser-monat', status_preset:'offen'}}\n" +
     "  Umsatz aktueller Monat:\n" +
     "    {action:'dashboard', params:{kpi:'umsatz-monat'}}",
-  inputSchema: zodToJsonSchema(RouterInput) as Record<string, unknown>,
+  inputSchema: z.toJSONSchema(RouterInput) as Record<string, unknown>,
   annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: false },
 };
 

@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { zodToJsonSchema } from "zod-to-json-schema";
 import { OpenXEClient } from "../client/openxe-client.js";
 
 // --- Input Schemas ---
@@ -27,7 +26,7 @@ const RefundInput = z.object({
   amount: z.number().optional().describe("Refund amount"),
   reason: z.string().optional().describe("Refund reason"),
   positions: z
-    .array(z.record(z.unknown()))
+    .array(z.record(z.string(), z.unknown()))
     .optional()
     .describe("Line items to refund"),
 });
@@ -59,70 +58,70 @@ export const SHOP_TOOL_DEFINITIONS: ToolDefinition[] = [
     name: "openxe-shop-status",
     description:
       "Check if the shop connection is active. GET /shopimport/status. Does not require an active shop.",
-    inputSchema: zodToJsonSchema(EmptyInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(EmptyInput) as Record<string, unknown>,
     annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   },
   {
     name: "openxe-shop-auth",
     description:
       "Authenticate / test the shop connection via RemoteConnection. POST /shopimport/auth.",
-    inputSchema: zodToJsonSchema(EmptyInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(EmptyInput) as Record<string, unknown>,
     annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   },
   {
     name: "openxe-shop-sync-stock",
     description:
       "Sync stock/storage for a single article to the shop. POST /shopimport/syncstorage/{articlenumber}. Article number is base64-encoded in the URL automatically.",
-    inputSchema: zodToJsonSchema(ArticleNumberInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(ArticleNumberInput) as Record<string, unknown>,
     annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   },
   {
     name: "openxe-shop-import-article",
     description:
       "Pull/import an article from the shop into Xentral. POST /shopimport/articletoxentral/{articlenumber}. Article number is base64-encoded in the URL automatically.",
-    inputSchema: zodToJsonSchema(ArticleNumberInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(ArticleNumberInput) as Record<string, unknown>,
     annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   },
   {
     name: "openxe-shop-push-article",
     description:
       "Push an article from Xentral to the shop. POST /shopimport/articletoshop/{articlenumber}. Article number is base64-encoded in the URL automatically.",
-    inputSchema: zodToJsonSchema(ArticleNumberInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(ArticleNumberInput) as Record<string, unknown>,
     annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   },
   {
     name: "openxe-shop-import-order",
     description:
       "Import a single order from the shop into Xentral. POST /shopimport/ordertoxentral/{ordernumber}. Order number is base64-encoded in the URL automatically.",
-    inputSchema: zodToJsonSchema(OrderNumberInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(OrderNumberInput) as Record<string, unknown>,
     annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   },
   {
     name: "openxe-shop-statistics",
     description:
       "Get shop statistics: orders in shipment, open orders, packages today/yesterday, income, contribution margin. GET /shopimport/statistics.",
-    inputSchema: zodToJsonSchema(EmptyInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(EmptyInput) as Record<string, unknown>,
     annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   },
   {
     name: "openxe-shop-disconnect",
     description:
       "Disconnect the shop (sets shopexport.aktiv = 0). POST /shopimport/disconnect.",
-    inputSchema: zodToJsonSchema(EmptyInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(EmptyInput) as Record<string, unknown>,
     annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: true, openWorldHint: false },
   },
   {
     name: "openxe-shop-reconnect",
     description:
       "Reconnect the shop (sets shopexport.aktiv = 1). POST /shopimport/reconnect.",
-    inputSchema: zodToJsonSchema(EmptyInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(EmptyInput) as Record<string, unknown>,
     annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   },
   {
     name: "openxe-shop-refund",
     description:
       "Process a refund for a shop order. POST /shopimport/refund. Accepts JSON body with refund details.",
-    inputSchema: zodToJsonSchema(RefundInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(RefundInput) as Record<string, unknown>,
     annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: false },
   },
 ];

@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { zodToJsonSchema } from "zod-to-json-schema";
 import { OpenXEClient } from "../client/openxe-client.js";
 import { fetchFilteredList } from "../utils/field-filter.js";
 import { fetchPurchaseOrdersWithMeta, PURCHASE_ORDER_SCAN_CAP } from "../utils/purchase-order-fetch.js";
@@ -62,7 +61,7 @@ export const BUSINESS_QUERY_TOOL_DEFINITION: ToolDefinition = {
     Object.entries(BUSINESS_PRESETS)
       .map(([k, v]) => `${k} = ${v.description}`)
       .join("; "),
-  inputSchema: zodToJsonSchema(BusinessQueryInput) as Record<string, unknown>,
+  inputSchema: z.toJSONSchema(BusinessQueryInput) as Record<string, unknown>,
   annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
 };
 
