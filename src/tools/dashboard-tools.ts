@@ -84,7 +84,7 @@ export const DASHBOARD_TOOL_DEFINITIONS: ToolDefinition[] = [
       "Verfuegbare KPIs: umsatz-monat, umsatz-jahr, offene-auftraege, offene-rechnungen, " +
       "ueberfaellige-rechnungen, top-kunde, auftragseingang-woche, artikel-anzahl, kunden-anzahl, " +
       "offene-bestellungen, bestellvolumen-monat.",
-    inputSchema: z.toJSONSchema(DashboardInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(DashboardInput, { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   },
 ];

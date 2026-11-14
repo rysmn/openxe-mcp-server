@@ -325,7 +325,7 @@ export const ARTICLE_TOOL_DEFINITIONS: ToolDefinition[] = [
       ArticleCreateInput.extend({
         confirm: z.boolean().optional().describe("Must be true to create. Without it the call only returns a dry-run preview."),
       })
-    ) as Record<string, unknown>,
+    , { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
   },
   {
@@ -343,7 +343,7 @@ export const ARTICLE_TOOL_DEFINITIONS: ToolDefinition[] = [
         ArticleUpdateBase.extend({
           confirm: z.boolean().optional().describe("Must be true to change the article. Without it the call only returns a dry-run preview."),
         })
-      ) as Record<string, unknown>),
+      , { io: "input" }) as Record<string, unknown>),
       anyOf: Object.keys(ArticleUpdateBase.shape)
         .filter((k) => k !== "nummer" && k !== "patched_api_rename")
         .map((k) => ({ required: [k] })),
@@ -361,7 +361,7 @@ export const ARTICLE_TOOL_DEFINITIONS: ToolDefinition[] = [
       ArticleDeleteInput.extend({
         confirm: z.boolean().optional().describe("Must be true to delete. Without it the call only returns a dry-run preview."),
       })
-    ) as Record<string, unknown>,
+    , { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: true, openWorldHint: false },
   },
   {
@@ -375,7 +375,7 @@ export const ARTICLE_TOOL_DEFINITIONS: ToolDefinition[] = [
       ArticlePurchasePriceDeleteInput.extend({
         confirm: z.boolean().optional().describe("Must be true to delete. Without it the call only returns a dry-run preview."),
       })
-    ) as Record<string, unknown>,
+    , { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: true, openWorldHint: false },
   },
   {
@@ -392,7 +392,7 @@ export const ARTICLE_TOOL_DEFINITIONS: ToolDefinition[] = [
       ArticlePurchasePriceInput.extend({
         confirm: z.boolean().optional().describe("Must be true to write the price. Without it the call only returns a dry-run preview."),
       })
-    ) as Record<string, unknown>,
+    , { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
   },
 ];

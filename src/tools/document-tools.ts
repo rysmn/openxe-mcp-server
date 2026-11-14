@@ -43,7 +43,7 @@ export const DOCUMENT_TOOL_DEFINITIONS: ToolDefinition[] = [
       "Do NOT include bezeichnung on positions (breaks PDF rendering; the system uses the article master data). " +
       "If the address has no kundennummer set, the call fails with a clear error — fix the address via openxe-edit-address first. " +
       "Workflow: create-order -> openxe-convert-order-to-invoice creates linked invoice + delivery note.",
-    inputSchema: z.toJSONSchema(OrderCreateInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(OrderCreateInput, { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
   },
   {
@@ -52,7 +52,7 @@ export const DOCUMENT_TOOL_DEFINITIONS: ToolDefinition[] = [
       "Create a quote (Angebot) via Legacy API. Required: adresse (customer ID), positionen [{nummer, menge, preis?}]. Optional: datum, gueltigbis, freitext, internebezeichnung. " +
       "Do NOT pass kundennummer (server resolves it from the address) and do NOT set bezeichnung on positions. " +
       "Address must already have a kundennummer, otherwise the call fails with a clear error.",
-    inputSchema: z.toJSONSchema(QuoteCreateInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(QuoteCreateInput, { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
   },
   {
@@ -62,7 +62,7 @@ export const DOCUMENT_TOOL_DEFINITIONS: ToolDefinition[] = [
       "Required: adresse (customer ID), positionen [{nummer, menge, preis}] — preis is mandatory. Optional: datum, zahlungsweise, zahlungszieltage, freitext, internebezeichnung. " +
       "Do NOT pass kundennummer (auto-resolved from the address) and do NOT set bezeichnung on positions. " +
       "Address must have a kundennummer or the call fails.",
-    inputSchema: z.toJSONSchema(InvoiceCreateInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(InvoiceCreateInput, { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
   },
   {
@@ -71,7 +71,7 @@ export const DOCUMENT_TOOL_DEFINITIONS: ToolDefinition[] = [
       "Create a credit note (Gutschrift). Required: adresse (customer ID), positionen [{nummer, menge, preis}]. Optional: rechnungid to link to an existing invoice. " +
       "Do NOT pass kundennummer (auto-resolved from the address) and do NOT set bezeichnung on positions. " +
       "Address must have a kundennummer.",
-    inputSchema: z.toJSONSchema(CreditNoteCreateInput) as Record<
+    inputSchema: z.toJSONSchema(CreditNoteCreateInput, { io: "input" }) as Record<
       string,
       unknown
     >,
@@ -83,40 +83,40 @@ export const DOCUMENT_TOOL_DEFINITIONS: ToolDefinition[] = [
     name: "openxe-convert-quote-to-order",
     description:
       "Convert an existing quote (Angebot) to a sales order (Auftrag). Required: id (quote ID).",
-    inputSchema: z.toJSONSchema(DocumentIdInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(DocumentIdInput, { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: false },
   },
   {
     name: "openxe-convert-order-to-invoice",
     description:
       "Convert a sales order to a linked invoice + delivery note via WeiterfuehrenAuftragZuRechnung. This is the standard workflow — creates invoice and delivery note in one step. Required: id (order ID).",
-    inputSchema: z.toJSONSchema(DocumentIdInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(DocumentIdInput, { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: false },
   },
   {
     name: "openxe-release-order",
     description:
       "Release/approve a sales order for processing. Required: id.",
-    inputSchema: z.toJSONSchema(DocumentIdInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(DocumentIdInput, { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: false },
   },
   {
     name: "openxe-release-invoice",
     description: "Release/finalize an invoice. Required: id.",
-    inputSchema: z.toJSONSchema(DocumentIdInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(DocumentIdInput, { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: false },
   },
   {
     name: "openxe-mark-invoice-paid",
     description: "Mark an invoice as paid. Required: id.",
-    inputSchema: z.toJSONSchema(DocumentIdInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(DocumentIdInput, { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: false },
   },
   {
     name: "openxe-delete-draft-invoice",
     description:
       "Delete a DRAFT invoice (only works if belegnr is empty or '0'). Cascades to positions and protocol entries. Required: id.",
-    inputSchema: z.toJSONSchema(DocumentIdInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(DocumentIdInput, { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: false },
   },
 
@@ -125,28 +125,28 @@ export const DOCUMENT_TOOL_DEFINITIONS: ToolDefinition[] = [
     name: "openxe-edit-order",
     description:
       "Auftrag bearbeiten via Legacy API (AuftragEdit). Aendert Kopffelder — Positionen koennen nach Erstellung nicht geaendert werden. Required: id. Optional: datum, projekt, zahlungsweise, lieferbedingung, freitext, internebezeichnung, versandart, lieferdatum.",
-    inputSchema: z.toJSONSchema(EditOrderInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(EditOrderInput, { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   },
   {
     name: "openxe-edit-invoice",
     description:
       "Rechnung bearbeiten via Legacy API (RechnungEdit). Aendert Kopffelder — Positionen koennen nach Erstellung nicht geaendert werden. Required: id. Optional: datum, projekt, zahlungsweise, zahlungszieltage, freitext, internebezeichnung.",
-    inputSchema: z.toJSONSchema(EditInvoiceInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(EditInvoiceInput, { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   },
   {
     name: "openxe-edit-quote",
     description:
       "Angebot bearbeiten via Legacy API (AngebotEdit). Aendert Kopffelder — Positionen koennen nach Erstellung nicht geaendert werden. Required: id. Optional: datum, gueltigbis, projekt, zahlungsweise, lieferbedingung, freitext, internebezeichnung.",
-    inputSchema: z.toJSONSchema(EditQuoteInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(EditQuoteInput, { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   },
   {
     name: "openxe-edit-delivery-note",
     description:
       "Lieferschein bearbeiten via Legacy API (LieferscheinEdit). Aendert Kopffelder — Positionen koennen nach Erstellung nicht geaendert werden. Required: id. Optional: datum, projekt, versandart, freitext, internebezeichnung.",
-    inputSchema: z.toJSONSchema(EditDeliveryNoteInput) as Record<
+    inputSchema: z.toJSONSchema(EditDeliveryNoteInput, { io: "input" }) as Record<
       string,
       unknown
     >,
@@ -156,7 +156,7 @@ export const DOCUMENT_TOOL_DEFINITIONS: ToolDefinition[] = [
     name: "openxe-edit-credit-memo",
     description:
       "Gutschrift bearbeiten via Legacy API (GutschriftEdit). Aendert Kopffelder — Positionen koennen nach Erstellung nicht geaendert werden. Required: id. Optional: datum, projekt, zahlungsweise, freitext, internebezeichnung.",
-    inputSchema: z.toJSONSchema(EditCreditMemoInput) as Record<
+    inputSchema: z.toJSONSchema(EditCreditMemoInput, { io: "input" }) as Record<
       string,
       unknown
     >,
@@ -168,7 +168,7 @@ export const DOCUMENT_TOOL_DEFINITIONS: ToolDefinition[] = [
     name: "openxe-get-document-pdf",
     description:
       "Get any document as PDF (base64 encoded). Required: typ (angebot|auftrag|rechnung|lieferschein|gutschrift|bestellung), id.",
-    inputSchema: z.toJSONSchema(BelegPDFInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(BelegPDFInput, { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   },
 ];

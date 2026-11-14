@@ -213,7 +213,7 @@ export const ADDRESS_TOOL_DEFINITIONS: ToolDefinition[] = [
         lieferantennummer: z.string().optional().describe("Supplier number. Omit or use \"NEU\" for automatic assignment (used with rolle Lieferant)."),
         confirm: z.boolean().optional().describe("Must be true to create. Without it the call only returns a dry-run preview."),
       })
-    ) as Record<string, unknown>,
+    , { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
   },
   {
@@ -224,14 +224,14 @@ export const ADDRESS_TOOL_DEFINITIONS: ToolDefinition[] = [
       AddressEditInput.extend({
         confirm: z.boolean().optional().describe("Must be true to apply the change. Without it the call only returns a dry-run preview."),
       })
-    ) as Record<string, unknown>,
+    , { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   },
   {
     name: "openxe-create-delivery-address",
     description:
       "Create a delivery address for a customer. Tries REST v1, falls back to Legacy API (REST v1 has a known PHP 8.1 Fatal Error). Required: name, adresse (parent address ID). Optional: typ, strasse, plz, ort, land (2-char ISO), standardlieferadresse (0/1), ust_befreit (0-3).",
-    inputSchema: z.toJSONSchema(DeliveryAddressCreateInput) as Record<
+    inputSchema: z.toJSONSchema(DeliveryAddressCreateInput, { io: "input" }) as Record<
       string,
       unknown
     >,
@@ -240,7 +240,7 @@ export const ADDRESS_TOOL_DEFINITIONS: ToolDefinition[] = [
   {
     name: "openxe-edit-delivery-address",
     description: "Edit an existing delivery address. Required: id.",
-    inputSchema: z.toJSONSchema(DeliveryAddressEditInput) as Record<
+    inputSchema: z.toJSONSchema(DeliveryAddressEditInput, { io: "input" }) as Record<
       string,
       unknown
     >,
@@ -254,7 +254,7 @@ export const ADDRESS_TOOL_DEFINITIONS: ToolDefinition[] = [
         id: z.number().int().positive().describe("Delivery address ID"),
         confirm: z.boolean().optional().describe("Must be true to delete. Without it the call only returns a dry-run preview."),
       })
-    ) as Record<string, unknown>,
+    , { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: false },
   },
 ];

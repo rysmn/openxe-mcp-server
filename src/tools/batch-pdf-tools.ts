@@ -44,7 +44,7 @@ export const BATCH_PDF_TOOL_DEFINITION: ToolDefinition = {
     "Mehrere Beleg-PDFs auf einmal herunterladen (max 20). " +
     "Entweder ids[] direkt angeben ODER mit status_preset / zeitraum / where filtern. " +
     "Gibt Array mit {id, belegnr, filename, size_bytes, base64} zurueck.",
-  inputSchema: z.toJSONSchema(BatchPDFInput) as Record<string, unknown>,
+  inputSchema: z.toJSONSchema(BatchPDFInput, { io: "input" }) as Record<string, unknown>,
   annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
 };
 

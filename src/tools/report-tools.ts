@@ -212,7 +212,7 @@ export const REPORT_TOOL_DEFINITIONS: ToolDefinition[] = [
       "Umsatzbericht: Umsaetze gruppiert nach Kunde, Artikel, Monat, Quartal, Jahr oder Projekt. " +
       "Optional mit Margenberechnung und Top-N-Filter. " +
       "Zeitraum: dieser-monat, letzter-monat, dieses-jahr, letztes-jahr, Q1-2026, 2025, letzte-12-monate.",
-    inputSchema: z.toJSONSchema(RevenueReportInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(RevenueReportInput, { io: "input" }) as Record<string, unknown>,
     annotations: READ_ONLY_ANNOTATIONS,
   },
   {
@@ -220,7 +220,7 @@ export const REPORT_TOOL_DEFINITIONS: ToolDefinition[] = [
     description:
       "Offene-Posten-Liste: Alle offenen Rechnungen als Liste, Altersstruktur (Aging Buckets), " +
       "oder Kreditlimit-Auslastung pro Kunde. Zeigt ueberfaellige Tage, offene Betraege und Mahnstatus.",
-    inputSchema: z.toJSONSchema(OpenItemsReportInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(OpenItemsReportInput, { io: "input" }) as Record<string, unknown>,
     annotations: READ_ONLY_ANNOTATIONS,
   },
   {
@@ -228,7 +228,7 @@ export const REPORT_TOOL_DEFINITIONS: ToolDefinition[] = [
     description:
       "Lagerbestandsbericht: Uebersicht aller Lagerartikel, Nachbestellbedarf (unter Mindestlager), " +
       "oder Lagerwert-Berechnung. Zeigt lagernd, reserviert, verkaufbar, Mindestlager.",
-    inputSchema: z.toJSONSchema(StockReportInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(StockReportInput, { io: "input" }) as Record<string, unknown>,
     annotations: READ_ONLY_ANNOTATIONS,
   },
   {
@@ -236,7 +236,7 @@ export const REPORT_TOOL_DEFINITIONS: ToolDefinition[] = [
     description:
       "Beschaffungsbericht: Einkaufsvolumen pro Lieferant oder offene Bestellungen mit Lieferstatus. " +
       "Optional mit Zeitraumfilter.",
-    inputSchema: z.toJSONSchema(ProcurementReportInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(ProcurementReportInput, { io: "input" }) as Record<string, unknown>,
     annotations: READ_ONLY_ANNOTATIONS,
   },
   {
@@ -244,7 +244,7 @@ export const REPORT_TOOL_DEFINITIONS: ToolDefinition[] = [
     description:
       "Periodenvergleich: Vergleicht aktuelle mit vorheriger Periode (Monat/Quartal/Jahr). " +
       "Metriken: Umsatz, Auftragseingang, Neukunden, Rechnungen. Zeigt Delta und prozentuale Veraenderung.",
-    inputSchema: z.toJSONSchema(PeriodComparisonInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(PeriodComparisonInput, { io: "input" }) as Record<string, unknown>,
     annotations: READ_ONLY_ANNOTATIONS,
   },
 ];

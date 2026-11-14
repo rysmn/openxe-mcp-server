@@ -61,7 +61,7 @@ export const BUSINESS_QUERY_TOOL_DEFINITION: ToolDefinition = {
     Object.entries(BUSINESS_PRESETS)
       .map(([k, v]) => `${k} = ${v.description}`)
       .join("; "),
-  inputSchema: z.toJSONSchema(BusinessQueryInput) as Record<string, unknown>,
+  inputSchema: z.toJSONSchema(BusinessQueryInput, { io: "input" }) as Record<string, unknown>,
   annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
 };
 

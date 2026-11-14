@@ -64,7 +64,7 @@ export const PROCUREMENT_TOOL_DEFINITIONS: ToolDefinition[] = [
       "Status-Presets: offen, freigegeben, bestellt, angemahnt, empfangen, aktiv. " +
       "Smart Filter: where, sort_field + sort_order (oder legacy sort: 'field_asc'), limit, fields, format (json/table/csv/ids — kein csv-positions), aggregate. " +
       "Fuer Details nutze openxe-get-purchase-order mit der ID.",
-    inputSchema: z.toJSONSchema(ListPurchaseOrdersInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(ListPurchaseOrdersInput, { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   },
   {
@@ -72,7 +72,7 @@ export const PROCUREMENT_TOOL_DEFINITIONS: ToolDefinition[] = [
     description:
       "Einzelne Bestellung (Purchase Order) abrufen via Legacy API (BestellungGet). " +
       "Gibt ALLE Felder zurueck inkl. verschachtelter artikelliste.position[] mit Positionsdetails.",
-    inputSchema: z.toJSONSchema(GetPurchaseOrderInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(GetPurchaseOrderInput, { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   },
 
@@ -84,7 +84,7 @@ export const PROCUREMENT_TOOL_DEFINITIONS: ToolDefinition[] = [
       "Required: adresse (Lieferanten-ID), positionen (mind. 1 Position mit nummer + menge). " +
       "Optional: projekt, lieferdatum, einkaeufer, zahlungsweise, versandart, freitext, internebezeichnung. " +
       "Preis pro Position: wenn nicht angegeben wird der Einkaufspreis aus dem Artikelstamm verwendet.",
-    inputSchema: z.toJSONSchema(CreatePurchaseOrderInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(CreatePurchaseOrderInput, { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
   },
   {
@@ -92,7 +92,7 @@ export const PROCUREMENT_TOOL_DEFINITIONS: ToolDefinition[] = [
     description:
       "Bestellung (Purchase Order) bearbeiten via Legacy API (BestellungEdit). " +
       "Required: id. Optional: lieferdatum, einkaeufer, zahlungsweise, versandart, freitext, internebezeichnung.",
-    inputSchema: z.toJSONSchema(EditPurchaseOrderInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(EditPurchaseOrderInput, { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   },
   {
@@ -100,7 +100,7 @@ export const PROCUREMENT_TOOL_DEFINITIONS: ToolDefinition[] = [
     description:
       "Bestellung (Purchase Order) freigeben via Legacy API (BestellungFreigabe). " +
       "Aendert Status von 'offen' auf 'freigegeben'. Required: id.",
-    inputSchema: z.toJSONSchema(ReleasePurchaseOrderInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(ReleasePurchaseOrderInput, { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: false },
   },
 ];

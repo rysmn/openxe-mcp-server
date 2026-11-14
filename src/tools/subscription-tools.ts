@@ -147,7 +147,7 @@ export const SUBSCRIPTION_TOOL_DEFINITIONS: ToolDefinition[] = [
     name: "openxe-list-subscriptions",
     description:
       "Liste aller Abo-Artikel (GET /v1/aboartikel). Kompakte Liste mit Schluesselfeldern. Optionale Filter: adresse, artikel, gruppe, projekt, bezeichnung. Smart Filter: where, sort_field, sort_order, limit, fields, format, aggregate.",
-    inputSchema: z.toJSONSchema(ListSubscriptionsInput) as Record<
+    inputSchema: z.toJSONSchema(ListSubscriptionsInput, { io: "input" }) as Record<
       string,
       unknown
     >,
@@ -157,7 +157,7 @@ export const SUBSCRIPTION_TOOL_DEFINITIONS: ToolDefinition[] = [
     name: "openxe-get-subscription",
     description:
       "Einzelnen Abo-Artikel abrufen (GET /v1/aboartikel/{id}). Gibt alle Felder zurueck inkl. Artikel-, Gruppen- und Adressinformationen.",
-    inputSchema: z.toJSONSchema(GetSubscriptionInput) as Record<
+    inputSchema: z.toJSONSchema(GetSubscriptionInput, { io: "input" }) as Record<
       string,
       unknown
     >,
@@ -167,7 +167,7 @@ export const SUBSCRIPTION_TOOL_DEFINITIONS: ToolDefinition[] = [
     name: "openxe-create-subscription",
     description:
       "Abo-Artikel anlegen. Pflichtfelder: adresse, bezeichnung, preisart (monat/jahr/wochen/einmalig/30tage/360tage). Optional: artikel oder artikelnummer, dokumenttyp, zahlzyklus, startdatum, preis, menge, etc.",
-    inputSchema: z.toJSONSchema(SubscriptionCreateInput) as Record<
+    inputSchema: z.toJSONSchema(SubscriptionCreateInput, { io: "input" }) as Record<
       string,
       unknown
     >,
@@ -176,7 +176,7 @@ export const SUBSCRIPTION_TOOL_DEFINITIONS: ToolDefinition[] = [
   {
     name: "openxe-edit-subscription",
     description: "Edit a subscription. Required: id.",
-    inputSchema: z.toJSONSchema(SubscriptionEditInput) as Record<
+    inputSchema: z.toJSONSchema(SubscriptionEditInput, { io: "input" }) as Record<
       string,
       unknown
     >,
@@ -188,14 +188,14 @@ export const SUBSCRIPTION_TOOL_DEFINITIONS: ToolDefinition[] = [
       "Cancel/soft-delete a subscription (sets gekuendigt). Required: id.",
     inputSchema: z.toJSONSchema(
       z.object({ id: z.number().int().positive() })
-    ) as Record<string, unknown>,
+    , { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: false },
   },
   {
     name: "openxe-create-crm-document",
     description:
       "Create a CRM document (note, email log, call log, or letter). Required: adresse_from, typ (email/brief/telefon/notiz), betreff.",
-    inputSchema: z.toJSONSchema(CrmDocumentCreateInput) as Record<
+    inputSchema: z.toJSONSchema(CrmDocumentCreateInput, { io: "input" }) as Record<
       string,
       unknown
     >,
@@ -205,7 +205,7 @@ export const SUBSCRIPTION_TOOL_DEFINITIONS: ToolDefinition[] = [
     name: "openxe-create-tracking",
     description:
       "Create a tracking number for a shipment. Required: tracking, gewicht, anzahlpakete, versendet_am. One of lieferschein/auftrag/internet must also be provided to identify the shipment.",
-    inputSchema: z.toJSONSchema(TrackingCreateInput) as Record<
+    inputSchema: z.toJSONSchema(TrackingCreateInput, { io: "input" }) as Record<
       string,
       unknown
     >,
@@ -215,7 +215,7 @@ export const SUBSCRIPTION_TOOL_DEFINITIONS: ToolDefinition[] = [
     name: "openxe-create-resubmission",
     description:
       "Create a task/reminder with due date. Required: bezeichnung (min 3 chars), datum_erinnerung (YYYY-MM-DD), zeit_erinnerung (HH:mm:ss).",
-    inputSchema: z.toJSONSchema(ResubmissionCreateInput) as Record<
+    inputSchema: z.toJSONSchema(ResubmissionCreateInput, { io: "input" }) as Record<
       string,
       unknown
     >,
@@ -225,13 +225,13 @@ export const SUBSCRIPTION_TOOL_DEFINITIONS: ToolDefinition[] = [
     name: "openxe-upload-file",
     description:
       "Datei hochladen und einem Objekt zuordnen (Auftrag, Rechnung, Kunde, Artikel, etc.). Die Datei erscheint im OpenXE UI unter dem zugeordneten Objekt im Tab 'Dateien'. Pflichtfelder: dateiname, titel, file_content (Base64), objekt_typ, objekt_id.",
-    inputSchema: z.toJSONSchema(FileUploadInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(FileUploadInput, { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
   },
   {
     name: "openxe-server-time",
     description: "Get current server time from OpenXE.",
-    inputSchema: z.toJSONSchema(ServerTimeInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(ServerTimeInput, { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   },
 ];

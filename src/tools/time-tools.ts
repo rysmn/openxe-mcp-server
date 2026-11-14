@@ -132,49 +132,49 @@ export const TIME_TOOL_DEFINITIONS: ToolDefinition[] = [
     name: "openxe-clock-status",
     description:
       "Stechuhr-Status eines Mitarbeiters abfragen (eingestempelt/ausgestempelt, aktuelle Pause). Pflichtfeld: adresse (Mitarbeiter-Adress-ID).",
-    inputSchema: z.toJSONSchema(ClockStatusInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(ClockStatusInput, { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   },
   {
     name: "openxe-clock-action",
     description:
       "Ein-/Ausstempeln oder Pause starten/stoppen. Pflichtfeld: cmd (kommen/gehen/pausestart/pausestop). Optional: user (Benutzer-ID), adresse (Mitarbeiter-Adress-ID als Fallback).",
-    inputSchema: z.toJSONSchema(ClockActionInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(ClockActionInput, { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: false },
   },
   {
     name: "openxe-clock-summary",
     description:
       "Wochen-Zeituebersicht: Soll-/Ist-Stunden, Ueberstunden, Urlaubstage. Pflichtfeld: adresse (Mitarbeiter-Adress-ID).",
-    inputSchema: z.toJSONSchema(ClockSummaryInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(ClockSummaryInput, { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   },
   {
     name: "openxe-list-time-entries",
     description:
       "Zeiterfassungs-Eintraege auflisten mit optionalen Filtern (adresse, kundennummer, projekt, von, bis, offset, limit).",
-    inputSchema: z.toJSONSchema(TimeEntryListInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(TimeEntryListInput, { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   },
   {
     name: "openxe-create-time-entry",
     description:
       "Neuen Zeiterfassungs-Eintrag erstellen. Pflichtfelder: aufgabe, von (YYYY-MM-DD HH:mm:ss), bis (YYYY-MM-DD HH:mm:ss). Mitarbeiter via mitarbeiternummer oder adresse.",
-    inputSchema: z.toJSONSchema(TimeEntryCreateInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(TimeEntryCreateInput, { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
   },
   {
     name: "openxe-edit-time-entry",
     description:
       "Zeiterfassungs-Eintrag bearbeiten. Pflichtfeld: id. Weitere Felder optional (aufgabe, von, bis, etc.).",
-    inputSchema: z.toJSONSchema(TimeEntryEditInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(TimeEntryEditInput, { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   },
   {
     name: "openxe-delete-time-entry",
     description:
       "Zeiterfassungs-Eintrag loeschen. Pflichtfeld: id.",
-    inputSchema: z.toJSONSchema(TimeEntryDeleteInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(TimeEntryDeleteInput, { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: false },
   },
 ];

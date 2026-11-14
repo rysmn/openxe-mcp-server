@@ -174,49 +174,49 @@ export const READ_TOOL_DEFINITIONS: ToolDefinition[] = [
     name: "openxe-list-addresses",
     description:
       "Liste aller Adressen/Kunden (GET /v1/adressen). Gibt eine kompakte Liste zurueck (nur Schluesselfelder). Fuer alle Details eines Eintrags nutze openxe-get-address. Optionale Filter: kundennummer, name, email, land. HINWEIS: Nur kundennummer wird serverseitig gefiltert; name/email/land werden clientseitig gefiltert. Mit include_deleted=true werden auch geloeschte Datensaetze angezeigt.",
-    inputSchema: z.toJSONSchema(ListAddressesInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(ListAddressesInput, { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   },
   {
     name: "openxe-get-address",
     description:
       "Einzelne Adresse abrufen (GET /v1/adressen/{id}). Gibt ALLE Felder eines einzelnen Datensatzes zurueck.",
-    inputSchema: z.toJSONSchema(GetAddressInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(GetAddressInput, { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   },
   {
     name: "openxe-list-articles",
     description:
       "Liste aller Artikel (GET /v1/artikel). Gibt eine kompakte Liste zurueck (nur Schluesselfelder). Fuer alle Details eines Artikels nutze openxe-get-article. Optionale Filter: name_de, nummer, typ, projekt. Include: verkaufspreise, lagerbestand, dateien, projekt. HINWEIS: Preise nur mit include=verkaufspreise sichtbar. Einkaufspreise sind nur ueber openxe-get-article (Einzelartikel) mit includeEinkaufspreise=true verfuegbar. Mit include_deleted=true werden auch geloeschte Datensaetze angezeigt.",
-    inputSchema: z.toJSONSchema(ListArticlesInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(ListArticlesInput, { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   },
   {
     name: "openxe-get-article",
     description:
       "Einzelnen Artikel abrufen (GET /v1/artikel/{id}). Gibt ALLE Felder eines einzelnen Datensatzes zurueck. Include: verkaufspreise, lagerbestand, dateien, projekt. Mit includeEinkaufspreise=true werden Einkaufspreise (Staffelpreise, Lieferanten) via Legacy API ergaenzt.",
-    inputSchema: z.toJSONSchema(GetArticleInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(GetArticleInput, { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   },
   {
     name: "openxe-list-categories",
     description:
       "Liste aller Artikelkategorien (GET /v1/artikelkategorien). Gibt eine kompakte Liste zurueck (nur Schluesselfelder). Optionale Filter: bezeichnung, parent, projekt. Mit include_deleted=true werden auch geloeschte Datensaetze angezeigt.",
-    inputSchema: z.toJSONSchema(ListCategoriesInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(ListCategoriesInput, { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   },
   {
     name: "openxe-list-shipping-methods",
     description:
       "Liste aller Versandarten (GET /v1/versandarten). Gibt eine kompakte Liste zurueck (nur Schluesselfelder). Mit include_deleted=true werden auch geloeschte Datensaetze angezeigt.",
-    inputSchema: z.toJSONSchema(ListShippingMethodsInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(ListShippingMethodsInput, { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   },
   {
     name: "openxe-list-files",
     description:
       "Liste aller Dateien/Anhaenge (GET /v1/dateien). Gibt eine kompakte Liste zurueck (nur Schluesselfelder). Optionale Filter: objekt, parameter, stichwort. Mit include_deleted=true werden auch geloeschte Datensaetze angezeigt.",
-    inputSchema: z.toJSONSchema(ListFilesInput) as Record<string, unknown>,
+    inputSchema: z.toJSONSchema(ListFilesInput, { io: "input" }) as Record<string, unknown>,
     annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   },
 ];

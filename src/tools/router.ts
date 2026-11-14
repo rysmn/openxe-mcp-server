@@ -215,7 +215,7 @@ export const DISCOVER_TOOL_DEFINITION: ToolDefinition = {
   name: "openxe-discover",
   description:
     "Shows available OpenXE actions. Call ONCE at conversation start, then use 'openxe' tool to execute actions. Do NOT call more than once per conversation. Optional: category filter.",
-  inputSchema: z.toJSONSchema(DiscoverInput) as Record<string, unknown>,
+  inputSchema: z.toJSONSchema(DiscoverInput, { io: "input" }) as Record<string, unknown>,
   annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
 };
 
@@ -358,7 +358,7 @@ export const ROUTER_TOOL_DEFINITION: ToolDefinition = {
     "    {action:'list-orders', params:{zeitraum:'dieser-monat', status_preset:'offen'}}\n" +
     "  Umsatz aktueller Monat:\n" +
     "    {action:'dashboard', params:{kpi:'umsatz-monat'}}",
-  inputSchema: z.toJSONSchema(RouterInput) as Record<string, unknown>,
+  inputSchema: z.toJSONSchema(RouterInput, { io: "input" }) as Record<string, unknown>,
   annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: false },
 };
 
